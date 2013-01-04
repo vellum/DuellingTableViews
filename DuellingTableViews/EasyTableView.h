@@ -51,6 +51,8 @@ typedef enum {
 @optional
 - (void)easyTableView:(EasyTableView *)easyTableView selectedView:(UIView *)selectedView atIndexPath:(NSIndexPath *)indexPath deselectedView:(UIView *)deselectedView;
 - (void)easyTableView:(EasyTableView *)easyTableView scrolledToOffset:(CGPoint)contentOffset;
+- (void)easyTableView:(EasyTableView *)easyTableView willEndDraggingWithVelocity:(CGFloat)velocity targetContentOffset:(CGFloat)targetContentOffset;
+
 - (NSUInteger)numberOfSectionsInEasyTableView:(EasyTableView*)easyTableView;
 - (NSUInteger)numberOfCellsForEasyTableView:(EasyTableView *)view inSection:(NSInteger)section;
 - (UIView*)easyTableView:(EasyTableView*)easyTableView viewForHeaderInSection:(NSInteger)section;
@@ -73,11 +75,13 @@ typedef enum {
 @property (nonatomic, readonly) EasyTableViewOrientation orientation;
 @property (nonatomic, assign) CGPoint contentOffset;
 @property (nonatomic, assign) NSUInteger numberOfCells;
+@property (nonatomic) BOOL isDragging;
 
 - (id)initWithFrame:(CGRect)frame numberOfColumns:(NSUInteger)numCells ofWidth:(CGFloat)cellWidth;
 - (id)initWithFrame:(CGRect)frame numberOfRows:(NSUInteger)numCells ofHeight:(CGFloat)cellHeight;
 - (CGPoint)offsetForView:(UIView *)cell;
 - (void)setContentOffset:(CGPoint)offset animated:(BOOL)animated;
+- (void)setContentOffset:(CGPoint)offset animatedWithDuration:(CGFloat)duration;
 - (void)selectCellAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated;
 - (UIView *)viewAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath*)indexPathForView:(UIView *)cell;

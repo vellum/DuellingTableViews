@@ -45,6 +45,7 @@
 @synthesize selectedIndexPath = _selectedIndexPath;
 @synthesize orientation = _orientation;
 @synthesize numberOfCells = _numItems;
+@synthesize isDragging;
 
 #pragma mark -
 #pragma mark Initialization
@@ -54,7 +55,7 @@
     if (self = [super initWithFrame:frame]) {
 		_numItems			= numCols;
 		_cellWidthOrHeight	= width;
-		
+		isDragging = NO;
 		[self createTableWithOrientation:EasyTableViewOrientationHorizontal];
 	}
     return self;
@@ -65,7 +66,7 @@
     if (self = [super initWithFrame:frame]) {
 		_numItems			= numRows;
 		_cellWidthOrHeight	= height;
-		
+		isDragging = NO;
 		[self createTableWithOrientation:EasyTableViewOrientationVertical];
     }
     return self;
@@ -147,17 +148,18 @@
 	else {
 		newOffset = offset;
 	}
-
+/*
     if (!animated){
         [self.tableView setContentOffset:newOffset animated:animated];
         return;
     }
+ */
     [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
     
     
-    [UIView animateWithDuration:1.0f
-                          delay:0.001f
-                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationCurveEaseIn
+    [UIView animateWithDuration:animated? 0.5f : 0
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationCurveEaseInOut
                      animations:^{
                          
                          CGRect scrollBounds = self.tableView.bounds;
@@ -167,6 +169,30 @@
                      completion:nil
      ];
 
+
+
+}
+- (void)setContentOffset:(CGPoint)offset animatedWithDuration:(CGFloat)duration{
+    CGPoint newOffset;
+	if (_orientation == EasyTableViewOrientationHorizontal) {
+		newOffset = CGPointMake(offset.y, offset.x);
+	}
+	else {
+		newOffset = offset;
+	}
+
+    [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
+    [UIView animateWithDuration:duration
+                          delay:0
+                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationCurveEaseInOut
+                     animations:^{
+                         
+                         CGRect scrollBounds = self.tableView.bounds;
+                         scrollBounds.origin = newOffset;
+                         self.tableView.bounds = scrollBounds;
+                     }
+                     completion:nil
+     ];
 
 
 }
@@ -333,6 +359,24 @@
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
 	if ([delegate respondsToSelector:@selector(easyTableView:scrolledToOffset:)])
 		[delegate easyTableView:self scrolledToOffset:self.contentOffset];
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    isDragging = YES;
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
+
+    isDragging = NO;
+    CGPoint p = CGPointMake(targetContentOffset->x, targetContentOffset->y);
+    CGFloat index = floor( p.y / _cellWidthOrHeight );
+    p.y = index * _cellWidthOrHeight;
+    targetContentOffset -> y = p.y;
+}
+
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    isDragging = NO;
 }
 
 

@@ -117,50 +117,64 @@
 
 - (void)easyTableView:(EasyTableView *)easyTableView scrolledToOffset:(CGPoint)contentOffset{
     
-    if ( easyTableView == self.verticalView )
-    {
-        
-        
-        NSLog( @"%f", contentOffset.y );
-        
+    if ( easyTableView == self.verticalView ){
         CGFloat index = contentOffset.y;
         if ( index < 0 )index = 0;
-        index = floorf( index / VER_TVC_HEIGHT );
-        
-        //NSLog( @"%f", index );
+        if ( easyTableView.isDragging )
+            index = floorf( index / VER_TVC_HEIGHT );
+        else
+            index /= VER_TVC_HEIGHT;
         
         CGFloat equivalentOffset = index * HOZ_TVC_WIDTH;
         if ( self.targetOffset.x != equivalentOffset ){
-            
             CGPoint p = self.targetOffset;
             p.x = equivalentOffset;
             self.targetOffset = p;
-            [self.horizontalView setContentOffset:CGPointMake(equivalentOffset, 0.0f) animated:YES];
-            
+            if ( easyTableView.isDragging ){
+                [self.horizontalView setContentOffset:CGPointMake(equivalentOffset, 0.0f) animated:YES];
+            }else{
+                [self.horizontalView setContentOffset:CGPointMake(equivalentOffset, 0.0f) animated:NO];
+            }
         }
-        
-        
     } else {
-        
-        
-        NSLog( @"%f", contentOffset.x );
+    
         CGFloat index = contentOffset.x;
         if ( index < 0 ) index = 0;
-        index = floorf( index / HOZ_TVC_WIDTH );
-        
-        //NSLog( @"%f", index );
+        if ( easyTableView.isDragging )
+            index = floorf( index / HOZ_TVC_WIDTH );
+        else
+            index /= HOZ_TVC_WIDTH;
         
         CGFloat equivalentOffset = index * VER_TVC_HEIGHT;
         if ( self.targetOffset.y != equivalentOffset ){
-            
             CGPoint p = self.targetOffset;
             p.y = equivalentOffset;
             self.targetOffset = p;
-            [self.verticalView setContentOffset:CGPointMake(0.0f, equivalentOffset) animated:YES];
-            
+            if ( easyTableView.isDragging ){
+                [self.verticalView setContentOffset:CGPointMake(0.0f, equivalentOffset) animated:YES];
+            } else {
+                [self.verticalView setContentOffset:CGPointMake(0.0f, equivalentOffset) animated:NO];
+            }
         }
+    }
+
+}
+
+- (void)easyTableView:(EasyTableView *)easyTableView willEndDraggingWithVelocity:(CGFloat)velocity targetContentOffset:(CGFloat)targetContentOffset{
+    if ( easyTableView == self.verticalView )
+    {
+        CGFloat contentOffsetY = easyTableView.tableView.contentOffset.y;
+        CGFloat targetOffsetY = targetContentOffset;
+        CGFloat index = floorf( targetOffsetY / VER_TVC_HEIGHT ); if ( index < 0 ){index = 0;}
+        CGFloat dist = fabsf( targetOffsetY - contentOffsetY );
+        CGFloat time = velocity / dist;
+        if ( velocity == 0 ) time = 1.0f;
+
+        CGFloat targetOffsetVer = index * VER_TVC_HEIGHT;
+
+        [self.verticalView setContentOffset:CGPointMake(0.0f, targetOffsetVer) animatedWithDuration:time];
         
-        
+    } else {
     }
 }
 
