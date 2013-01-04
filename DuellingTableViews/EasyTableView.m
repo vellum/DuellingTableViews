@@ -369,9 +369,14 @@
 
     isDragging = NO;
     CGPoint p = CGPointMake(targetContentOffset->x, targetContentOffset->y);
-    CGFloat index = floor( p.y / _cellWidthOrHeight );
+    CGFloat index = roundf( p.y / _cellWidthOrHeight );
     p.y = index * _cellWidthOrHeight;
     targetContentOffset -> y = p.y;
+    
+	if ([delegate respondsToSelector:@selector(easyTableView:willEndDraggingWithVelocity:targetContentOffset:)]){
+        [delegate easyTableView:self willEndDraggingWithVelocity:velocity.y targetContentOffset:p.y];
+    }
+
 }
 
 

@@ -8,16 +8,17 @@
 
 #import "VLMViewController.h"
 #define HOZ_TV_HEIGHT 150
-#define HOZ_TVC_WIDTH 100
-#define VER_TVC_HEIGHT 60
+#define HOZ_TVC_WIDTH 150
+#define VER_TVC_HEIGHT 50
 
 @interface VLMViewController ()
 @property (nonatomic) CGPoint targetOffset;
+@property (nonatomic) BOOL ignoreScrolling;
 @end
 
 @implementation VLMViewController
 
-@synthesize verticalView, horizontalView, targetOffset;
+@synthesize verticalView, horizontalView, targetOffset, ignoreScrolling;
 
 - (void)viewDidLoad
 {
@@ -25,6 +26,7 @@
     [super viewDidLoad];
     
     self.targetOffset = CGPointMake(0, 0);
+    self.ignoreScrolling = NO;
     
     [self setupHorizontalView];
     [self setupVerticalView];
@@ -62,7 +64,7 @@
     NSInteger NUM_OF_CELLS = 100;
     UIColor *TABLE_BACKGROUND_COLOR = [UIColor clearColor];
     
-	EasyTableView *view	= [[EasyTableView alloc] initWithFrame:frameRect numberOfRows:NUM_OF_CELLS ofHeight:60.0f];
+	EasyTableView *view	= [[EasyTableView alloc] initWithFrame:frameRect numberOfRows:NUM_OF_CELLS ofHeight:VER_TVC_HEIGHT];
 	self.verticalView = view;
     
 	verticalView.delegate					= self;
@@ -117,11 +119,13 @@
 
 - (void)easyTableView:(EasyTableView *)easyTableView scrolledToOffset:(CGPoint)contentOffset{
     
+    if (easyTableView.isDragging) self.ignoreScrolling = NO;
+    
     if ( easyTableView == self.verticalView ){
         CGFloat index = contentOffset.y;
         if ( index < 0 )index = 0;
         if ( easyTableView.isDragging )
-            index = floorf( index / VER_TVC_HEIGHT );
+            index = roundf( index / VER_TVC_HEIGHT );
         else
             index /= VER_TVC_HEIGHT;
         
@@ -132,7 +136,7 @@
             self.targetOffset = p;
             if ( easyTableView.isDragging ){
                 [self.horizontalView setContentOffset:CGPointMake(equivalentOffset, 0.0f) animated:YES];
-            }else{
+            } else if (!self.ignoreScrolling) {
                 [self.horizontalView setContentOffset:CGPointMake(equivalentOffset, 0.0f) animated:NO];
             }
         }
@@ -141,7 +145,7 @@
         CGFloat index = contentOffset.x;
         if ( index < 0 ) index = 0;
         if ( easyTableView.isDragging )
-            index = floorf( index / HOZ_TVC_WIDTH );
+            index = roundf( index / HOZ_TVC_WIDTH );
         else
             index /= HOZ_TVC_WIDTH;
         
@@ -152,7 +156,7 @@
             self.targetOffset = p;
             if ( easyTableView.isDragging ){
                 [self.verticalView setContentOffset:CGPointMake(0.0f, equivalentOffset) animated:YES];
-            } else {
+            } else if (!self.ignoreScrolling) {
                 [self.verticalView setContentOffset:CGPointMake(0.0f, equivalentOffset) animated:NO];
             }
         }
@@ -161,21 +165,34 @@
 }
 
 - (void)easyTableView:(EasyTableView *)easyTableView willEndDraggingWithVelocity:(CGFloat)velocity targetContentOffset:(CGFloat)targetContentOffset{
-    if ( easyTableView == self.verticalView )
-    {
-        CGFloat contentOffsetY = easyTableView.tableView.contentOffset.y;
-        CGFloat targetOffsetY = targetContentOffset;
-        CGFloat index = floorf( targetOffsetY / VER_TVC_HEIGHT ); if ( index < 0 ){index = 0;}
-        CGFloat dist = fabsf( targetOffsetY - contentOffsetY );
-        CGFloat time = velocity / dist;
-        if ( velocity == 0 ) time = 1.0f;
-
-        CGFloat targetOffsetVer = index * VER_TVC_HEIGHT;
-
-        [self.verticalView setContentOffset:CGPointMake(0.0f, targetOffsetVer) animatedWithDuration:time];
+    
+    // test if scrollview is already where it needs to be
+    // if so, set a flag to ignore scrolling
+    
+    
         
-    } else {
-    }
+    if ( easyTableView == self.verticalView )
+        {
+            CGFloat targetOffsetY = targetContentOffset;
+            CGFloat index = roundf( targetOffsetY / VER_TVC_HEIGHT ); if ( index < 0 ){index = 0;}
+            
+            CGFloat contentOffsetX = self.horizontalView.tableView.contentOffset.y;
+            CGFloat targetOffsetX = index * HOZ_TVC_WIDTH;
+            if ( contentOffsetX == targetOffsetX ){
+                self.ignoreScrolling = YES;
+            }
+            
+        } else {
+            CGFloat targetOffsetX = targetContentOffset;
+            CGFloat index = roundf( targetOffsetX / HOZ_TVC_WIDTH ); if ( index < 0 ){index = 0;}
+            
+            CGFloat contentOffsetY = self.verticalView.tableView.contentOffset.y;
+            CGFloat targetOffsetY = index * VER_TVC_HEIGHT;
+            if ( contentOffsetY == targetOffsetY ){
+                self.ignoreScrolling = YES;
+            }
+        }
+        
 }
 
 - (void)didReceiveMemoryWarning
