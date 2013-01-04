@@ -14,13 +14,11 @@
 @interface VLMViewController ()
 @property (nonatomic) CGFloat targetOffsetX;
 @property (nonatomic) CGFloat targetOffsetY;
-@property (nonatomic) BOOL isHorizontalSelected;
-@property (nonatomic) BOOL isVerticalSelected;
 @end
 
 @implementation VLMViewController
 
-@synthesize verticalView, horizontalView, targetOffsetX, targetOffsetY, isHorizontalSelected, isVerticalSelected;
+@synthesize verticalView, horizontalView, targetOffsetX, targetOffsetY;
 
 - (void)viewDidLoad
 {
@@ -29,8 +27,6 @@
     
     targetOffsetX = 0;
     targetOffsetY = 0;
-    isHorizontalSelected = NO;
-    isVerticalSelected = NO;
     
     [self setupHorizontalView];
     [self setupVerticalView];
@@ -163,21 +159,6 @@
         }
         
         
-    }
-}
-- (void)touchesBeganInEasyTableView:(EasyTableView *)easyTableView{
-    
-    [self.verticalView killAnimations];
-    [self.horizontalView killAnimations];
-    
-    if ( easyTableView == self.horizontalView ){
-        NSLog(@"ho");
-        isHorizontalSelected = YES;
-        isVerticalSelected = NO;
-    } else {
-        NSLog(@"vert");
-        isHorizontalSelected = NO;
-        isVerticalSelected = YES;
     }
 }
 

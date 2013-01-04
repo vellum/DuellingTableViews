@@ -435,26 +435,8 @@
     [self.tableView reloadData];
 }
 
-- (void)touchesBegan{
-    
-    [self killAnimations];
-    
-    if ( [delegate respondsToSelector:@selector(touchesBeganInEasyTableView:)]){
-        
-        
-        [delegate touchesBeganInEasyTableView:self];
-        
-        
-    }
-}
 
 - (void)killAnimations{
-    /*
-    BOOL animationsEnabled = [UIView areAnimationsEnabled];
-    [UIView setAnimationsEnabled:NO];
-    [self.tableView.layer removeAllAnimations];
-    [UIView setAnimationsEnabled:animationsEnabled];
-     */
     [self.tableView setContentOffset:self.tableView.contentOffset];
 }
 @end
