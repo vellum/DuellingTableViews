@@ -12,21 +12,19 @@
 #define VER_TVC_HEIGHT 60
 
 @interface VLMViewController ()
-@property (nonatomic) CGFloat targetOffsetX;
-@property (nonatomic) CGFloat targetOffsetY;
+@property (nonatomic) CGPoint targetOffset;
 @end
 
 @implementation VLMViewController
 
-@synthesize verticalView, horizontalView, targetOffsetX, targetOffsetY;
+@synthesize verticalView, horizontalView, targetOffset;
 
 - (void)viewDidLoad
 {
     
     [super viewDidLoad];
     
-    targetOffsetX = 0;
-    targetOffsetY = 0;
+    self.targetOffset = CGPointMake(0, 0);
     
     [self setupHorizontalView];
     [self setupVerticalView];
@@ -132,9 +130,11 @@
         //NSLog( @"%f", index );
         
         CGFloat equivalentOffset = index * HOZ_TVC_WIDTH;
-        if ( self.targetOffsetX != equivalentOffset ){
+        if ( self.targetOffset.x != equivalentOffset ){
             
-            self.targetOffsetX = equivalentOffset;
+            CGPoint p = self.targetOffset;
+            p.x = equivalentOffset;
+            self.targetOffset = p;
             [self.horizontalView setContentOffset:CGPointMake(equivalentOffset, 0.0f) animated:YES];
             
         }
@@ -151,9 +151,11 @@
         //NSLog( @"%f", index );
         
         CGFloat equivalentOffset = index * VER_TVC_HEIGHT;
-        if ( self.targetOffsetY != equivalentOffset ){
+        if ( self.targetOffset.y != equivalentOffset ){
             
-            self.targetOffsetY = equivalentOffset;
+            CGPoint p = self.targetOffset;
+            p.y = equivalentOffset;
+            self.targetOffset = p;
             [self.verticalView setContentOffset:CGPointMake(0.0f, equivalentOffset) animated:YES];
             
         }
