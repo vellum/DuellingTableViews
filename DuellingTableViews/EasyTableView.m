@@ -159,7 +159,8 @@
     
     [UIView animateWithDuration:animated? 0.5f : 0
                           delay:0
-                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationCurveEaseInOut
+                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationCurveEaseInOut|UIViewAnimationOptionAllowUserInteraction
+
                      animations:^{
                          
                          CGRect scrollBounds = self.tableView.bounds;
@@ -184,7 +185,7 @@
     [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
     [UIView animateWithDuration:duration
                           delay:0
-                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationCurveEaseInOut
+                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationCurveEaseInOut|UIViewAnimationOptionAllowUserInteraction
                      animations:^{
                          
                          CGRect scrollBounds = self.tableView.bounds;

@@ -135,7 +135,7 @@
         }*/
         
 
-        CGRect labelRect		= CGRectMake(m+4, 6, 17, 25);
+        CGRect labelRect		= CGRectMake(m+5, 6, 17, 25);
         UILabel *label			= [[UILabel alloc] initWithFrame:labelRect];
         label.textColor			= [UIColor darkGrayColor];
         label.textAlignment = UITextAlignmentCenter;
@@ -145,19 +145,19 @@
         [retview addSubview:label];
 
 
-        labelRect		= CGRectMake(55, 9, rect.size.width-75, 20);
+        labelRect		= CGRectMake(50, 8, rect.size.width-75, 20);
         UILabel *label2			= [[UILabel alloc] initWithFrame:labelRect];
         label2.textColor			= [UIColor colorWithWhite:0.2 alpha:1.0];
         label2.backgroundColor = [UIColor clearColor];
-        label2.font				= [UIFont fontWithName:@"Courier" size:18];
+        label2.font				= [UIFont boldSystemFontOfSize:18];//[UIFont fontWithName:@"Courier" size:18];
         label2.text = @"Apple Macbook Pro (2012)";
         [retview addSubview:label2];
 
-        labelRect		= CGRectMake(55, 9+18, rect.size.width-75, 40);
+        labelRect		= CGRectMake(50, 10+18, rect.size.width-75, 40);
         UILabel *label3			= [[UILabel alloc] initWithFrame:labelRect];
         label3.textColor			= [UIColor colorWithWhite:0.5 alpha:1.0];
         label3.backgroundColor = [UIColor clearColor];
-        label3.font				= [UIFont fontWithName:@"Courier" size:13];
+        label3.font				= [UIFont systemFontOfSize:13];//[UIFont fontWithName:@"Courier" size:13];
         label3.numberOfLines = 2;
         label3.text = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas aliquam vulputate rutrum. Cras ut tincidunt lacus. Vestibulum sit amet tristique mi.";
         [retview addSubview:label3];
