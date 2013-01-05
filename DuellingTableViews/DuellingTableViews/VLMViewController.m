@@ -10,8 +10,8 @@
 #define HEADER_HEIGHT 50
 #define HOZ_TV_HEIGHT 150
 #define HOZ_TVC_WIDTH 150
-#define VER_TVC_HEIGHT 60
-#define GUTTER 10
+#define VER_TVC_HEIGHT 75
+#define GUTTER 7
 #define LABEL_TAG 10001
 
 @interface VLMViewController ()
@@ -31,6 +31,12 @@
     self.targetOffset = CGPointMake(0, 0);
     self.ignoreScrolling = NO;
     self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    
+    for ( int i = 0; i < self.view.bounds.size.height; i+= 15 ){
+        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, i, self.view.bounds.size.width, 0.25)];
+        [v setBackgroundColor:[UIColor whiteColor]];
+        [self.view addSubview: v];
+    }
     
     [self setupHorizontalView];
     [self setupVerticalView];
@@ -121,17 +127,43 @@
         [marker setImage:[UIImage imageNamed:@"marker_bottom.png"]];
         [retview addSubview:marker];
         
+        /*
+        for ( int i = 3; i < VER_TVC_HEIGHT; i+= 15 ){
+            UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, i, rect.size.width, 0.25)];
+            [v setBackgroundColor:[UIColor redColor]];
+            [retview addSubview: v];
+        }*/
+        
 
-        CGRect labelRect		= CGRectMake(m+5, 4, 17, 25);
+        CGRect labelRect		= CGRectMake(m+4, 6, 17, 25);
         UILabel *label			= [[UILabel alloc] initWithFrame:labelRect];
-        label.textColor			= [UIColor grayColor];
+        label.textColor			= [UIColor darkGrayColor];
         label.textAlignment = UITextAlignmentCenter;
         label.backgroundColor = [UIColor clearColor];
         label.font				= [UIFont boldSystemFontOfSize:14];
         label.tag = LABEL_TAG;
         [retview addSubview:label];
-        return retview;
+
+
+        labelRect		= CGRectMake(55, 9, rect.size.width-75, 20);
+        UILabel *label2			= [[UILabel alloc] initWithFrame:labelRect];
+        label2.textColor			= [UIColor colorWithWhite:0.2 alpha:1.0];
+        label2.backgroundColor = [UIColor clearColor];
+        label2.font				= [UIFont fontWithName:@"Courier" size:18];
+        label2.text = @"Apple Macbook Pro (2012)";
+        [retview addSubview:label2];
+
+        labelRect		= CGRectMake(55, 9+18, rect.size.width-75, 40);
+        UILabel *label3			= [[UILabel alloc] initWithFrame:labelRect];
+        label3.textColor			= [UIColor colorWithWhite:0.5 alpha:1.0];
+        label3.backgroundColor = [UIColor clearColor];
+        label3.font				= [UIFont fontWithName:@"Courier" size:13];
+        label3.numberOfLines = 2;
+        label3.text = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas aliquam vulputate rutrum. Cras ut tincidunt lacus. Vestibulum sit amet tristique mi.";
+        [retview addSubview:label3];
+
         
+        return retview;
     }
 }
 
