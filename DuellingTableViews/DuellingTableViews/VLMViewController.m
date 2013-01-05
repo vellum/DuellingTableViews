@@ -13,6 +13,7 @@
 #define VER_TVC_HEIGHT 75
 #define GUTTER 7
 #define LABEL_TAG 10001
+#define ITEM_COUNT 100
 
 @interface VLMViewController ()
 @property (nonatomic) CGPoint targetOffset;
@@ -50,7 +51,7 @@
     CGSize curSize = self.view.bounds.size;
     
     CGRect frameRect = CGRectMake(0, HEADER_HEIGHT, curSize.width, HOZ_TV_HEIGHT);
-    NSInteger NUM_OF_CELLS = 100;
+    NSInteger NUM_OF_CELLS = ITEM_COUNT;
     UIColor *TABLE_BACKGROUND_COLOR = [UIColor clearColor];
     
 	EasyTableView *view	= [[EasyTableView alloc] initWithFrame:frameRect numberOfColumns:NUM_OF_CELLS ofWidth:HOZ_TVC_WIDTH];
@@ -70,7 +71,7 @@
     CGSize curSize = self.view.bounds.size;
     
     CGRect frameRect = CGRectMake(0, HEADER_HEIGHT + HOZ_TV_HEIGHT+GUTTER, curSize.width, curSize.height - HOZ_TV_HEIGHT - HEADER_HEIGHT - GUTTER);
-    NSInteger NUM_OF_CELLS = 100;
+    NSInteger NUM_OF_CELLS = ITEM_COUNT;
     UIColor *TABLE_BACKGROUND_COLOR = [UIColor clearColor];
     
 	EasyTableView *view	= [[EasyTableView alloc] initWithFrame:frameRect numberOfRows:NUM_OF_CELLS ofHeight:VER_TVC_HEIGHT];
@@ -199,6 +200,7 @@
             index = roundf( index / VER_TVC_HEIGHT );
         else
             index /= VER_TVC_HEIGHT;
+        if ( index > ITEM_COUNT-1 ) index = ITEM_COUNT-1;
         
         CGFloat equivalentOffset = index * HOZ_TVC_WIDTH;
         if ( self.targetOffset.x != equivalentOffset ){
