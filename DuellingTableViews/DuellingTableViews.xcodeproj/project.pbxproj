@@ -19,6 +19,10 @@
 		BDFB8FA516974CC300542CC8 /* VLMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFB8FA416974CC300542CC8 /* VLMViewController.m */; };
 		BDFB8FA816974CC300542CC8 /* VLMViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = BDFB8FA616974CC300542CC8 /* VLMViewController.xib */; };
 		BDFB8FB016974CDB00542CC8 /* EasyTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BDFB8FAF16974CDB00542CC8 /* EasyTableView.m */; };
+		BDFB8FBF1697F8A100542CC8 /* marker_top.png in Resources */ = {isa = PBXBuildFile; fileRef = BDFB8FBD1697F8A100542CC8 /* marker_top.png */; };
+		BDFB8FC01697F8A100542CC8 /* marker_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BDFB8FBE1697F8A100542CC8 /* marker_top@2x.png */; };
+		BDFB8FD01697FDB300542CC8 /* marker_bottom.png in Resources */ = {isa = PBXBuildFile; fileRef = BDFB8FCE1697FDB200542CC8 /* marker_bottom.png */; };
+		BDFB8FD11697FDB300542CC8 /* marker_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BDFB8FCF1697FDB200542CC8 /* marker_bottom@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +44,10 @@
 		BDFB8FA716974CC300542CC8 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/VLMViewController.xib; sourceTree = "<group>"; };
 		BDFB8FAE16974CDB00542CC8 /* EasyTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EasyTableView.h; path = ../EasyTableView.h; sourceTree = "<group>"; };
 		BDFB8FAF16974CDB00542CC8 /* EasyTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EasyTableView.m; path = ../EasyTableView.m; sourceTree = "<group>"; };
+		BDFB8FBD1697F8A100542CC8 /* marker_top.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marker_top.png; sourceTree = "<group>"; };
+		BDFB8FBE1697F8A100542CC8 /* marker_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker_top@2x.png"; sourceTree = "<group>"; };
+		BDFB8FCE1697FDB200542CC8 /* marker_bottom.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = marker_bottom.png; sourceTree = "<group>"; };
+		BDFB8FCF1697FDB200542CC8 /* marker_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "marker_bottom@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +109,10 @@
 		BDFB8F9216974CC200542CC8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BDFB8FCE1697FDB200542CC8 /* marker_bottom.png */,
+				BDFB8FCF1697FDB200542CC8 /* marker_bottom@2x.png */,
+				BDFB8FBD1697F8A100542CC8 /* marker_top.png */,
+				BDFB8FBE1697F8A100542CC8 /* marker_top@2x.png */,
 				BDFB8F9316974CC200542CC8 /* DuellingTableViews-Info.plist */,
 				BDFB8F9416974CC300542CC8 /* InfoPlist.strings */,
 				BDFB8F9716974CC300542CC8 /* main.m */,
@@ -169,6 +181,10 @@
 				BDFB8FA016974CC300542CC8 /* Default@2x.png in Resources */,
 				BDFB8FA216974CC300542CC8 /* Default-568h@2x.png in Resources */,
 				BDFB8FA816974CC300542CC8 /* VLMViewController.xib in Resources */,
+				BDFB8FBF1697F8A100542CC8 /* marker_top.png in Resources */,
+				BDFB8FC01697F8A100542CC8 /* marker_top@2x.png in Resources */,
+				BDFB8FD01697FDB300542CC8 /* marker_bottom.png in Resources */,
+				BDFB8FD11697FDB300542CC8 /* marker_bottom@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +315,7 @@
 				BDFB8FAD16974CC300542CC8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -95,8 +95,8 @@
 	if (orientation == EasyTableViewOrientationHorizontal)
 		tableView.transform	= CGAffineTransformMakeRotation(-M_PI/2);
 	
-	tableView.showsVerticalScrollIndicator	 = YES;
-	tableView.showsHorizontalScrollIndicator = YES;
+	tableView.showsVerticalScrollIndicator	 = NO;
+	tableView.showsHorizontalScrollIndicator = NO;
 	
 	[self addSubview:tableView];
 }
@@ -399,8 +399,9 @@
 
 
 - (UITableViewCell *)tableView:(UITableView *)aTableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString *CellIdentifier = @"EasyTableViewCell";
-    
+    static NSString *CellIdentifierH = @"EasyTableViewCellH";
+    static NSString *CellIdentifierV = @"EasyTableViewCellV";
+    NSString *CellIdentifier = _orientation == EasyTableViewOrientationHorizontal ? CellIdentifierH : CellIdentifierV;
     UITableViewCell *cell = [aTableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[EasyTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
@@ -423,7 +424,7 @@
 		rotatedView.backgroundColor		= self.cellBackgroundColor;
 		
 		if (_orientation == EasyTableViewOrientationHorizontal) {
-			rotatedView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+			//rotatedView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 			rotatedView.transform = CGAffineTransformMakeRotation(M_PI/2);
 		}
 		else 
@@ -468,7 +469,7 @@
 	if (content == nil)
 		content = [[UIView alloc] initWithFrame:rotatedView.bounds];
 	
-	content.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	//content.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 	content.tag = CELL_CONTENT_TAG;
 	[rotatedView addSubview:content];
 }

@@ -7,9 +7,12 @@
 //
 
 #import "VLMViewController.h"
+#define HEADER_HEIGHT 50
 #define HOZ_TV_HEIGHT 150
 #define HOZ_TVC_WIDTH 150
-#define VER_TVC_HEIGHT 50
+#define VER_TVC_HEIGHT 60
+#define GUTTER 10
+#define LABEL_TAG 10001
 
 @interface VLMViewController ()
 @property (nonatomic) CGPoint targetOffset;
@@ -27,6 +30,7 @@
     
     self.targetOffset = CGPointMake(0, 0);
     self.ignoreScrolling = NO;
+    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
     
     [self setupHorizontalView];
     [self setupVerticalView];
@@ -39,7 +43,7 @@
 - (void)setupHorizontalView {
     CGSize curSize = self.view.bounds.size;
     
-    CGRect frameRect = CGRectMake(0, 0, curSize.width, HOZ_TV_HEIGHT);
+    CGRect frameRect = CGRectMake(0, HEADER_HEIGHT, curSize.width, HOZ_TV_HEIGHT);
     NSInteger NUM_OF_CELLS = 100;
     UIColor *TABLE_BACKGROUND_COLOR = [UIColor clearColor];
     
@@ -49,9 +53,8 @@
 	horizontalView.delegate						= self;
 	horizontalView.tableView.backgroundColor	= TABLE_BACKGROUND_COLOR;
 	horizontalView.tableView.allowsSelection	= YES;
-	horizontalView.tableView.separatorColor		= [UIColor whiteColor];
+	horizontalView.tableView.separatorColor		= [UIColor clearColor];
 	horizontalView.cellBackgroundColor			= [UIColor clearColor];
-    
 	[self.view addSubview:horizontalView];
 }
 
@@ -60,7 +63,7 @@
 - (void)setupVerticalView {
     CGSize curSize = self.view.bounds.size;
     
-    CGRect frameRect = CGRectMake(0, HOZ_TV_HEIGHT, curSize.width, curSize.height - HOZ_TV_HEIGHT);
+    CGRect frameRect = CGRectMake(0, HEADER_HEIGHT + HOZ_TV_HEIGHT+GUTTER, curSize.width, curSize.height - HOZ_TV_HEIGHT - HEADER_HEIGHT - GUTTER);
     NSInteger NUM_OF_CELLS = 100;
     UIColor *TABLE_BACKGROUND_COLOR = [UIColor clearColor];
     
@@ -70,7 +73,7 @@
 	verticalView.delegate					= self;
 	verticalView.tableView.backgroundColor	= TABLE_BACKGROUND_COLOR;
 	verticalView.tableView.allowsSelection	= YES;
-	verticalView.tableView.separatorColor	= [[UIColor blackColor] colorWithAlphaComponent:0.01];
+	verticalView.tableView.separatorColor	= [UIColor clearColor];
 	verticalView.cellBackgroundColor		= [UIColor clearColor];
     verticalView.autoresizingMask			= UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     
@@ -84,21 +87,50 @@
 
 - (UIView *)easyTableView:(EasyTableView *)easyTableView viewForRect:(CGRect)rect {
     
+    CGFloat m = 10.0f;
+    CGFloat b = 4.0f;
+
     if (easyTableView == self.horizontalView) {
-        CGRect labelRect		= CGRectMake(0, 0.0f, rect.size.width, rect.size.height+0.0f);
+        UIView *retview = [[UIView alloc] initWithFrame:CGRectMake (m, 0, rect.size.width-m, rect.size.height-m)];
+        [retview setBackgroundColor:[UIColor colorWithWhite:0.85f alpha:1.0f]];
+
+        UIView *whiteview = [[UIView alloc] initWithFrame:CGRectMake(b, b, retview.frame.size.width-b*2, retview.frame.size.height-b*2)];
+        [whiteview setBackgroundColor:[UIColor whiteColor]];
+        [retview addSubview:whiteview];
+        
+        UIImageView *marker = [[UIImageView alloc] initWithFrame:CGRectMake(b, b, 19, 46)];
+        [marker setImage:[UIImage imageNamed:@"marker_top.png"]];
+        [retview addSubview:marker];
+        
+        CGRect labelRect		= CGRectMake(b, b, 17, 21);
         UILabel *label			= [[UILabel alloc] initWithFrame:labelRect];
         label.textColor			= [UIColor whiteColor];
+        label.backgroundColor = [UIColor clearColor];
         label.textAlignment = UITextAlignmentCenter;
-        label.backgroundColor = [UIColor redColor];
-        label.font				= [UIFont boldSystemFontOfSize:60];
-        return label;
+        label.font				= [UIFont boldSystemFontOfSize:14];
+        label.tag = LABEL_TAG;
+        [retview addSubview:label];
+        return retview;
+
     } else {
-        CGRect labelRect		= CGRectMake(0, 0.0f, rect.size.width, rect.size.height);
+        //UIView *retview = [[UIView alloc] initWithFrame:CGRectMake(15, 0, rect.size.width-30, rect.size.height-1)];
+        UIView *retview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
+        [retview setBackgroundColor:[UIColor clearColor]];//colorWithWhite:1.0f alpha:1.0f]];
+        
+        UIImageView *marker = [[UIImageView alloc] initWithFrame:CGRectMake(m, 0, 39, 54)];
+        [marker setImage:[UIImage imageNamed:@"marker_bottom.png"]];
+        [retview addSubview:marker];
+        
+
+        CGRect labelRect		= CGRectMake(m+5, 4, 17, 25);
         UILabel *label			= [[UILabel alloc] initWithFrame:labelRect];
-        label.textColor			= [UIColor blackColor];
-        label.backgroundColor = [UIColor whiteColor];
-        label.font				= [UIFont boldSystemFontOfSize:60];
-        return label;
+        label.textColor			= [UIColor grayColor];
+        label.textAlignment = UITextAlignmentCenter;
+        label.backgroundColor = [UIColor clearColor];
+        label.font				= [UIFont boldSystemFontOfSize:14];
+        label.tag = LABEL_TAG;
+        [retview addSubview:label];
+        return retview;
         
     }
 }
@@ -106,15 +138,13 @@
 // Second delegate populates the views with data from a data source
 
 - (void)easyTableView:(EasyTableView *)easyTableView setDataForView:(UIView *)view forIndexPath:(NSIndexPath *)indexPath {
-	UILabel *label	= (UILabel *)view;
+	UILabel *label	= (UILabel *)[view viewWithTag:LABEL_TAG];
 	label.text		= [NSString stringWithFormat:@"%i", indexPath.row];
 }
 
 // Optional delegate to track the selection of a particular cell
 
 - (void)easyTableView:(EasyTableView *)easyTableView selectedView:(UIView *)selectedView atIndexPath:(NSIndexPath *)indexPath deselectedView:(UIView *)deselectedView {
-    
-    
 }
 
 - (void)easyTableView:(EasyTableView *)easyTableView scrolledToOffset:(CGPoint)contentOffset{
