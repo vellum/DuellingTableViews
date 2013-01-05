@@ -145,11 +145,11 @@
         [retview addSubview:label];
 
 
-        labelRect		= CGRectMake(50, 8, rect.size.width-75, 20);
+        labelRect		= CGRectMake(50, 6.5, rect.size.width-75, 20);
         UILabel *label2			= [[UILabel alloc] initWithFrame:labelRect];
         label2.textColor			= [UIColor colorWithWhite:0.2 alpha:1.0];
         label2.backgroundColor = [UIColor clearColor];
-        label2.font				= [UIFont boldSystemFontOfSize:18];//[UIFont fontWithName:@"Courier" size:18];
+        label2.font				= [UIFont boldSystemFontOfSize:21];//[UIFont fontWithName:@"Courier" size:18];
         label2.text = @"Apple Macbook Pro (2012)";
         [retview addSubview:label2];
 
@@ -165,6 +165,15 @@
         
         return retview;
     }
+}
+- (UIView*)easyTableView:(EasyTableView*)easyTableView viewForFooterInSection:(NSInteger)section{
+    CGSize curSize = self.view.bounds.size;
+    CGRect frameRect = ( easyTableView == self.verticalView ) ?
+        CGRectMake(0, 0, curSize.width, curSize.height - HEADER_HEIGHT - HOZ_TV_HEIGHT - VER_TVC_HEIGHT ) :
+        CGRectMake(0, 0, curSize.width - HOZ_TVC_WIDTH, HOZ_TV_HEIGHT );
+    UIView *ret = [[UIView alloc] initWithFrame:frameRect];
+    [ret setBackgroundColor:[UIColor clearColor]];
+    return ret;
 }
 
 // Second delegate populates the views with data from a data source
