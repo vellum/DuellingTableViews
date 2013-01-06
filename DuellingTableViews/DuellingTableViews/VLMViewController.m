@@ -6,12 +6,12 @@
 //  Copyright (c) 2013 David Lu. All rights reserved.
 //
 
-// TODO: Add Header
 // TODO: TouchBegin anywhere should halt scrolling
-// TODO: TouchBegin any cell tilts
-// TODO: Tap left side of cell to toggle selection, activate menu
 // TODO: Tap Statusbar to scroll to top
 // TODO: Pan gesture recco resizes views
+
+// TODO: TouchBegin any cell tilts
+// TODO: Tap left side of cell to toggle selection, activate menu
 
 #pragma mark -
 
@@ -68,7 +68,7 @@
     label.textAlignment = UITextAlignmentCenter;
     label.font				= [UIFont boldSystemFontOfSize:24];
     label.text = @"All Items";
-    label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
     label.shadowOffset = CGSizeMake(0, 1);
     [self.view addSubview:label];
 
@@ -137,17 +137,18 @@
         
         UIImageView *marker = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 41, 55)];
         [marker setImage:[UIImage imageNamed:@"marker_top.png"]];
+        [marker setAlpha:1.0f];
         [retview addSubview:marker];
         
         CGRect labelRect		= CGRectMake(b, b, 17, 21);
         UILabel *label			= [[UILabel alloc] initWithFrame:labelRect];
-        label.textColor			= [UIColor whiteColor];
+        label.textColor			= [UIColor colorWithWhite:1.0f alpha:1.0f];
         label.backgroundColor = [UIColor clearColor];
         label.textAlignment = UITextAlignmentCenter;
         label.font				= [UIFont boldSystemFontOfSize:14];
         label.tag = LABEL_TAG;
-        label.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.25f];
-        label.shadowOffset = CGSizeMake(0, 1);
+        //label.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.25f];
+        //label.shadowOffset = CGSizeMake(0, 1);
 
         [retview addSubview:label];
         return retview;
@@ -186,7 +187,7 @@
         label2.textColor			= [UIColor colorWithWhite:0.2 alpha:0.9];
         label2.backgroundColor = [UIColor clearColor];
         label2.font				= [UIFont boldSystemFontOfSize:21];//[UIFont fontWithName:@"Courier" size:18];
-        label2.text = @"Apple Macbook Pro (2012)";
+        label2.text = @"Make, Model, Item";
         label2.shadowColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
         label2.shadowOffset = CGSizeMake(0, 1);
 
