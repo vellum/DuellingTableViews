@@ -6,6 +6,15 @@
 //  Copyright (c) 2013 David Lu. All rights reserved.
 //
 
+// TODO: Add Header
+// TODO: TouchBegin anywhere should halt scrolling
+// TODO: TouchBegin any cell tilts
+// TODO: Tap left side of cell to toggle selection, activate menu
+// TODO: Tap Statusbar to scroll to top
+// TODO: Pan gesture recco resizes views
+
+#pragma mark -
+
 #import "VLMViewController.h"
 #define HEADER_HEIGHT 50
 #define HOZ_TV_HEIGHT 150
@@ -14,6 +23,7 @@
 #define GUTTER 7
 #define LABEL_TAG 10001
 #define ITEM_COUNT 100
+#define DEBUG_GRID
 
 @interface VLMViewController ()
 @property (nonatomic) CGPoint targetOffset;
@@ -41,7 +51,7 @@
     }
     for ( int i = 0; i < self.view.bounds.size.width; i+= 10 ){
         UIView *v = [[UIView alloc] initWithFrame:CGRectMake(i, 0, 1, self.view.bounds.size.height)];
-        [v setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.1f]];
+        [v setBackgroundColor:[UIColor colorWithWhite:0.2f alpha:0.1f]];
         [self.view addSubview: v];
     }
 #endif
@@ -153,7 +163,7 @@
         [retview addSubview:label];
 
 
-        labelRect		= CGRectMake(50, 6.5, rect.size.width-75, 22);
+        labelRect		= CGRectMake(50, 6.5, rect.size.width-80, 22);
         UILabel *label2			= [[UILabel alloc] initWithFrame:labelRect];
         label2.textColor			= [UIColor colorWithWhite:0.2 alpha:1.0];
         label2.backgroundColor = [UIColor clearColor];
@@ -161,7 +171,7 @@
         label2.text = @"Apple Macbook Pro (2012)";
         [retview addSubview:label2];
 
-        labelRect		= CGRectMake(50, 10+18, rect.size.width-75, 40);
+        labelRect		= CGRectMake(50, 10+18, rect.size.width-80, 40);
         UILabel *label3			= [[UILabel alloc] initWithFrame:labelRect];
         label3.textColor			= [UIColor colorWithWhite:0.2f alpha:0.425f];
         label3.backgroundColor = [UIColor clearColor];
@@ -201,6 +211,7 @@
     if (easyTableView.isDragging) self.ignoreScrolling = NO;
     
     if ( easyTableView == self.verticalView ){
+        
         CGFloat index = contentOffset.y;
         if ( index < 0 )index = 0;
         if ( easyTableView.isDragging )
