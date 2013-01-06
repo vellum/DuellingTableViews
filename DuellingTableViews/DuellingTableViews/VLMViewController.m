@@ -68,8 +68,8 @@
     label.textAlignment = UITextAlignmentCenter;
     label.font				= [UIFont boldSystemFontOfSize:24];
     label.text = @"All Items";
-    //label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
-    //label.shadowOffset = CGSizeMake(0, 1);
+    label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    label.shadowOffset = CGSizeMake(0, 1);
     [self.view addSubview:label];
 
 }
@@ -176,6 +176,8 @@
         label.backgroundColor = [UIColor clearColor];
         label.font				= [UIFont boldSystemFontOfSize:14];
         label.tag = LABEL_TAG;
+        label.shadowColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
+        label.shadowOffset = CGSizeMake(0, 1);
         [retview addSubview:label];
 
 
@@ -185,6 +187,9 @@
         label2.backgroundColor = [UIColor clearColor];
         label2.font				= [UIFont boldSystemFontOfSize:21];//[UIFont fontWithName:@"Courier" size:18];
         label2.text = @"Apple Macbook Pro (2012)";
+        label2.shadowColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
+        label2.shadowOffset = CGSizeMake(0, 1);
+
         [retview addSubview:label2];
 
         labelRect		= CGRectMake(50, 10+18, rect.size.width-80, 40);
@@ -194,6 +199,9 @@
         label3.font				= [UIFont systemFontOfSize:13];//[UIFont fontWithName:@"Courier" size:13];
         label3.numberOfLines = 2;
         label3.text = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas aliquam vulputate rutrum. Cras ut tincidunt lacus. Vestibulum sit amet tristique mi.";
+        label3.shadowColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
+        label3.shadowOffset = CGSizeMake(0, 1);
+
         [retview addSubview:label3];
 
         
