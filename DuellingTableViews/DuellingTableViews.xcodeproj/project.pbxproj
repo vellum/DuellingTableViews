@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD3A61A31698DF5F00E4D2CC /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = BD3A61A11698DF5F00E4D2CC /* background.png */; };
+		BD3A61A41698DF5F00E4D2CC /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BD3A61A21698DF5F00E4D2CC /* background@2x.png */; };
 		BDFB8F8C16974CC200542CC8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDFB8F8B16974CC200542CC8 /* UIKit.framework */; };
 		BDFB8F8E16974CC200542CC8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDFB8F8D16974CC200542CC8 /* Foundation.framework */; };
 		BDFB8F9016974CC200542CC8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDFB8F8F16974CC200542CC8 /* CoreGraphics.framework */; };
@@ -26,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BD3A61A11698DF5F00E4D2CC /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
+		BD3A61A21698DF5F00E4D2CC /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		BDFB8F8716974CC200542CC8 /* DuellingTableViews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DuellingTableViews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BDFB8F8B16974CC200542CC8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BDFB8F8D16974CC200542CC8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -109,6 +113,8 @@
 		BDFB8F9216974CC200542CC8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				BD3A61A11698DF5F00E4D2CC /* background.png */,
+				BD3A61A21698DF5F00E4D2CC /* background@2x.png */,
 				BDFB8FCE1697FDB200542CC8 /* marker_bottom.png */,
 				BDFB8FCF1697FDB200542CC8 /* marker_bottom@2x.png */,
 				BDFB8FBD1697F8A100542CC8 /* marker_top.png */,
@@ -185,6 +191,8 @@
 				BDFB8FC01697F8A100542CC8 /* marker_top@2x.png in Resources */,
 				BDFB8FD01697FDB300542CC8 /* marker_bottom.png in Resources */,
 				BDFB8FD11697FDB300542CC8 /* marker_bottom@2x.png in Resources */,
+				BD3A61A31698DF5F00E4D2CC /* background.png in Resources */,
+				BD3A61A41698DF5F00E4D2CC /* background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

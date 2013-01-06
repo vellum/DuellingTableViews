@@ -31,13 +31,20 @@
     
     self.targetOffset = CGPointMake(0, 0);
     self.ignoreScrolling = NO;
-    self.view.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.0];
+    self.view.backgroundColor = [UIColor clearColor];//[UIColor colorWithWhite:0.9 alpha:1.0];
     
+#ifdef DEBUG_GRID
     for ( int i = 0; i < self.view.bounds.size.height; i+= 15 ){
-        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, i, self.view.bounds.size.width, 0.25)];
-        [v setBackgroundColor:[UIColor whiteColor]];
+        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(0, i, self.view.bounds.size.width, 1)];
+        [v setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.1f]];
         [self.view addSubview: v];
     }
+    for ( int i = 0; i < self.view.bounds.size.width; i+= 10 ){
+        UIView *v = [[UIView alloc] initWithFrame:CGRectMake(i, 0, 1, self.view.bounds.size.height)];
+        [v setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.1f]];
+        [self.view addSubview: v];
+    }
+#endif
     
     [self setupHorizontalView];
     [self setupVerticalView];
@@ -99,13 +106,13 @@
 
     if (easyTableView == self.horizontalView) {
         UIView *retview = [[UIView alloc] initWithFrame:CGRectMake (m, 0, rect.size.width-m, rect.size.height-m)];
-        [retview setBackgroundColor:[UIColor colorWithWhite:0.85f alpha:1.0f]];
+        [retview setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.0325f]];
 
         UIView *whiteview = [[UIView alloc] initWithFrame:CGRectMake(b, b, retview.frame.size.width-b*2, retview.frame.size.height-b*2)];
         [whiteview setBackgroundColor:[UIColor whiteColor]];
         [retview addSubview:whiteview];
         
-        UIImageView *marker = [[UIImageView alloc] initWithFrame:CGRectMake(b, b, 19, 46)];
+        UIImageView *marker = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 41, 55)];
         [marker setImage:[UIImage imageNamed:@"marker_top.png"]];
         [retview addSubview:marker];
         
@@ -124,7 +131,7 @@
         UIView *retview = [[UIView alloc] initWithFrame:CGRectMake(0, 0, rect.size.width, rect.size.height)];
         [retview setBackgroundColor:[UIColor clearColor]];//colorWithWhite:1.0f alpha:1.0f]];
         
-        UIImageView *marker = [[UIImageView alloc] initWithFrame:CGRectMake(m, 0, 39, 54)];
+        UIImageView *marker = [[UIImageView alloc] initWithFrame:CGRectMake(m, 0, 41, 55)];
         [marker setImage:[UIImage imageNamed:@"marker_bottom.png"]];
         [retview addSubview:marker];
         
@@ -136,7 +143,7 @@
         }*/
         
 
-        CGRect labelRect		= CGRectMake(m+5, 6, 17, 25);
+        CGRect labelRect		= CGRectMake(m+5, 7, 17, 25);
         UILabel *label			= [[UILabel alloc] initWithFrame:labelRect];
         label.textColor			= [UIColor darkGrayColor];
         label.textAlignment = UITextAlignmentCenter;
@@ -146,7 +153,7 @@
         [retview addSubview:label];
 
 
-        labelRect		= CGRectMake(50, 6.5, rect.size.width-75, 20);
+        labelRect		= CGRectMake(50, 6.5, rect.size.width-75, 22);
         UILabel *label2			= [[UILabel alloc] initWithFrame:labelRect];
         label2.textColor			= [UIColor colorWithWhite:0.2 alpha:1.0];
         label2.backgroundColor = [UIColor clearColor];
@@ -156,7 +163,7 @@
 
         labelRect		= CGRectMake(50, 10+18, rect.size.width-75, 40);
         UILabel *label3			= [[UILabel alloc] initWithFrame:labelRect];
-        label3.textColor			= [UIColor colorWithWhite:0.5 alpha:1.0];
+        label3.textColor			= [UIColor colorWithWhite:0.2f alpha:0.425f];
         label3.backgroundColor = [UIColor clearColor];
         label3.font				= [UIFont systemFontOfSize:13];//[UIFont fontWithName:@"Courier" size:13];
         label3.numberOfLines = 2;
