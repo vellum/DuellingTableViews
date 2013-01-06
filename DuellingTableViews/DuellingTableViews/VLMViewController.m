@@ -23,7 +23,7 @@
 #define GUTTER 7
 #define LABEL_TAG 10001
 #define ITEM_COUNT 100
-#define DEBUG_GRID
+//#define DEBUG_GRID
 
 @interface VLMViewController ()
 @property (nonatomic) CGPoint targetOffset;
@@ -59,6 +59,19 @@
     [self setupHorizontalView];
     [self setupVerticalView];
     
+    
+    CGSize curSize = self.view.bounds.size;
+    CGRect labelRect		= CGRectMake(0, 0, curSize.width, HEADER_HEIGHT);
+    UILabel *label			= [[UILabel alloc] initWithFrame:labelRect];
+    label.textColor			= [UIColor colorWithWhite:1.0f alpha:1.0f];
+    label.backgroundColor = [UIColor clearColor];
+    label.textAlignment = UITextAlignmentCenter;
+    label.font				= [UIFont boldSystemFontOfSize:24];
+    label.text = @"All Items";
+    //label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.25f];
+    //label.shadowOffset = CGSizeMake(0, 1);
+    [self.view addSubview:label];
+
 }
 
 #pragma mark -
@@ -133,6 +146,9 @@
         label.textAlignment = UITextAlignmentCenter;
         label.font				= [UIFont boldSystemFontOfSize:14];
         label.tag = LABEL_TAG;
+        label.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.25f];
+        label.shadowOffset = CGSizeMake(0, 1);
+
         [retview addSubview:label];
         return retview;
 
@@ -165,7 +181,7 @@
 
         labelRect		= CGRectMake(50, 6.5, rect.size.width-80, 22);
         UILabel *label2			= [[UILabel alloc] initWithFrame:labelRect];
-        label2.textColor			= [UIColor colorWithWhite:0.2 alpha:1.0];
+        label2.textColor			= [UIColor colorWithWhite:0.2 alpha:0.9];
         label2.backgroundColor = [UIColor clearColor];
         label2.font				= [UIFont boldSystemFontOfSize:21];//[UIFont fontWithName:@"Courier" size:18];
         label2.text = @"Apple Macbook Pro (2012)";
