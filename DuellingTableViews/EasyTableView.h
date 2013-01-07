@@ -6,6 +6,8 @@
 //  Copyright 2010 Yodel Code. All rights reserved.
 //
 //
+// MODIFIED BY DAVID LU
+
 /* ===========================================================================
  
  NOTES:	EasyTableView addresses two concerns. The first is the ability to have
@@ -81,10 +83,8 @@ typedef enum {
 - (id)initWithFrame:(CGRect)frame numberOfRows:(NSUInteger)numCells ofHeight:(CGFloat)cellHeight;
 - (CGPoint)offsetForView:(UIView *)cell;
 - (void)setContentOffset:(CGPoint)offset animated:(BOOL)animated;
-- (void)setContentOffset:(CGPoint)offset animatedWithDuration:(CGFloat)duration;
 - (void)selectCellAtIndexPath:(NSIndexPath *)indexPath animated:(BOOL)animated;
 - (UIView *)viewAtIndexPath:(NSIndexPath *)indexPath;
 - (NSIndexPath*)indexPathForView:(UIView *)cell;
 - (void)reloadData;
-- (void)killAnimations;
 @end

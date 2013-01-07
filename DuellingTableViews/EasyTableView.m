@@ -5,6 +5,7 @@
 //  Created by Aleksey Novicov on 5/30/10.
 //  Copyright 2010 Yodel Code. All rights reserved.
 //
+// MODIFIED BY DAVID LU 
 
 #import <QuartzCore/QuartzCore.h>
 #import "EasyTableView.h"
@@ -170,30 +171,6 @@
                      completion:nil
      ];
 
-
-
-}
-- (void)setContentOffset:(CGPoint)offset animatedWithDuration:(CGFloat)duration{
-    CGPoint newOffset;
-	if (_orientation == EasyTableViewOrientationHorizontal) {
-		newOffset = CGPointMake(offset.y, offset.x);
-	}
-	else {
-		newOffset = offset;
-	}
-
-    [self.tableView setContentOffset:self.tableView.contentOffset animated:NO];
-    [UIView animateWithDuration:duration
-                          delay:0
-                        options:UIViewAnimationOptionBeginFromCurrentState|UIViewAnimationCurveEaseInOut|UIViewAnimationOptionAllowUserInteraction
-                     animations:^{
-                         
-                         CGRect scrollBounds = self.tableView.bounds;
-                         scrollBounds.origin = newOffset;
-                         self.tableView.bounds = scrollBounds;
-                     }
-                     completion:nil
-     ];
 
 
 }
@@ -425,7 +402,7 @@
 		rotatedView.backgroundColor		= self.cellBackgroundColor;
 		
 		if (_orientation == EasyTableViewOrientationHorizontal) {
-			//rotatedView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+			rotatedView.autoresizingMask = UIViewAutoresizingFlexibleHeight;
 			rotatedView.transform = CGAffineTransformMakeRotation(M_PI/2);
 		}
 		else 
@@ -470,7 +447,7 @@
 	if (content == nil)
 		content = [[UIView alloc] initWithFrame:rotatedView.bounds];
 	
-	//content.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
+	content.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
 	content.tag = CELL_CONTENT_TAG;
 	[rotatedView addSubview:content];
 }
@@ -486,9 +463,5 @@
     [self.tableView reloadData];
 }
 
-
-- (void)killAnimations{
-    [self.tableView setContentOffset:self.tableView.contentOffset];
-}
 @end
 
