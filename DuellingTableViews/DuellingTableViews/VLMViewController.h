@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "EasyTableView.h"
 
-@interface VLMViewController : UIViewController <EasyTableViewDelegate> {
+@interface VLMViewController : UIViewController <EasyTableViewDelegate, UIGestureRecognizerDelegate> {
     
     EasyTableView *verticalView;
     EasyTableView *horizontalView;

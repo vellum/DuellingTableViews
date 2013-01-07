@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD23D01C169AA8BA00E0ABBD /* VLMTouchBeganRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = BD23D01B169AA8BA00E0ABBD /* VLMTouchBeganRecognizer.m */; };
 		BD3A61A31698DF5F00E4D2CC /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = BD3A61A11698DF5F00E4D2CC /* background.png */; };
 		BD3A61A41698DF5F00E4D2CC /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BD3A61A21698DF5F00E4D2CC /* background@2x.png */; };
 		BDCA97181699821100694DFA /* background_light.png in Resources */ = {isa = PBXBuildFile; fileRef = BDCA97161699821100694DFA /* background_light.png */; };
@@ -30,6 +31,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BD23D01A169AA8BA00E0ABBD /* VLMTouchBeganRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VLMTouchBeganRecognizer.h; sourceTree = "<group>"; };
+		BD23D01B169AA8BA00E0ABBD /* VLMTouchBeganRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VLMTouchBeganRecognizer.m; sourceTree = "<group>"; };
 		BD3A61A11698DF5F00E4D2CC /* background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background.png; sourceTree = "<group>"; };
 		BD3A61A21698DF5F00E4D2CC /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
 		BDCA97161699821100694DFA /* background_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_light.png; sourceTree = "<group>"; };
@@ -109,6 +112,8 @@
 				BDFB8FA616974CC300542CC8 /* VLMViewController.xib */,
 				BDFB8FAE16974CDB00542CC8 /* EasyTableView.h */,
 				BDFB8FAF16974CDB00542CC8 /* EasyTableView.m */,
+				BD23D01A169AA8BA00E0ABBD /* VLMTouchBeganRecognizer.h */,
+				BD23D01B169AA8BA00E0ABBD /* VLMTouchBeganRecognizer.m */,
 				BDFB8F9216974CC200542CC8 /* Supporting Files */,
 			);
 			path = DuellingTableViews;
@@ -215,6 +220,7 @@
 				BDFB8F9C16974CC300542CC8 /* VLMAppDelegate.m in Sources */,
 				BDFB8FA516974CC300542CC8 /* VLMViewController.m in Sources */,
 				BDFB8FB016974CDB00542CC8 /* EasyTableView.m in Sources */,
+				BD23D01C169AA8BA00E0ABBD /* VLMTouchBeganRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

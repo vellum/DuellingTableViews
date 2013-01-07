@@ -5,17 +5,17 @@
 //  Created by David Lu on 1/4/13.
 //  Copyright (c) 2013 David Lu. All rights reserved.
 //
-
-// TODO: TouchBegin anywhere should halt scrolling
+// FIXME: weird animation bug
 // TODO: Tap Statusbar to scroll to top
 // TODO: Pan gesture recco resizes views
-
 // TODO: TouchBegin any cell tilts
 // TODO: Tap left side of cell to toggle selection, activate menu
 
 #pragma mark -
 
 #import "VLMViewController.h"
+#import "VLMTouchBeganRecognizer.h"
+
 #define HEADER_HEIGHT 50
 #define HOZ_TV_HEIGHT 150
 #define HOZ_TVC_WIDTH 150
@@ -28,6 +28,8 @@
 @interface VLMViewController ()
 @property (nonatomic) CGPoint targetOffset;
 @property (nonatomic) BOOL ignoreScrolling;
+@property (readwrite) BOOL isHorizontalFocused;
+@property (readwrite) BOOL isVerticalFocused;
 @end
 
 @implementation VLMViewController
@@ -42,6 +44,8 @@
     self.targetOffset = CGPointMake(0, 0);
     self.ignoreScrolling = NO;
     self.view.backgroundColor = [UIColor clearColor];//[UIColor colorWithWhite:0.9 alpha:1.0];
+    self.isHorizontalFocused = NO;
+    self.isVerticalFocused = NO;
     
 #ifdef DEBUG_GRID
     for ( int i = 0; i < self.view.bounds.size.height; i+= 15 ){
@@ -55,9 +59,10 @@
         [self.view addSubview: v];
     }
 #endif
-    
+
     [self setupHorizontalView];
     [self setupVerticalView];
+    [self setupGR];
     
     
     CGSize curSize = self.view.bounds.size;
@@ -74,6 +79,69 @@
 
 }
 
+
+#pragma mark -
+#pragma mark Gesture Recco
+- (void)setupGR {
+    VLMTouchBeganRecognizer *gr = [[VLMTouchBeganRecognizer alloc] initWithTarget:self action:@selector(handleGenericGesture:)];
+    [gr setDelegate:self];
+    [self.view addGestureRecognizer:gr];
+}
+
+- (void)handleGenericGesture:(id)sender{
+    VLMTouchBeganRecognizer *gr = (VLMTouchBeganRecognizer *)sender;
+    if (gr.state == UIGestureRecognizerStateBegan){
+        if (CGRectContainsPoint(self.horizontalView.frame, gr.firsttouch)){
+            NSLog(@"hoz");
+            if (!self.isHorizontalFocused){
+                self.isHorizontalFocused = YES;
+                self.isVerticalFocused = NO;
+                
+                [self.verticalView setContentOffset:[self.verticalView contentOffset] animated:NO];
+                [self.horizontalView setContentOffset:[self.horizontalView contentOffset] animated:NO];
+            } else {
+                [gr setState:UIGestureRecognizerStateFailed];
+            }
+        }
+        else if (CGRectContainsPoint(self.verticalView.frame, gr.firsttouch)){
+            if ( !self.isVerticalFocused){
+                self.isHorizontalFocused = NO;
+                self.isVerticalFocused = YES;
+                
+                [self.verticalView setContentOffset:[self.verticalView contentOffset] animated:NO];
+                [self.horizontalView setContentOffset:[self.horizontalView contentOffset] animated:NO];
+                NSLog(@"vert");
+            } else {
+                [gr setState:UIGestureRecognizerStateFailed];
+            } 
+        }
+        NSLog(@"%@", NSStringFromCGPoint(gr.firsttouch));
+    } else if (gr.state == UIGestureRecognizerStateRecognized){
+        NSLog(@"recco");
+        
+        CGFloat index = verticalView.contentOffset.y;
+        if ( index < 0 )index = 0;
+        index = roundf( index / VER_TVC_HEIGHT );
+        if ( index > ITEM_COUNT-1 ) index = ITEM_COUNT-1;
+        
+        CGFloat equivalentOffset = index * HOZ_TVC_WIDTH;
+        [self.horizontalView setContentOffset:CGPointMake(equivalentOffset,0.0f) animated:YES];
+        [self.verticalView setContentOffset:CGPointMake(0.0f, index*VER_TVC_HEIGHT) animated:YES];
+
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer{
+    return YES;
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer{
+    return YES;
+}
 #pragma mark -
 #pragma mark EasyTableView Initialization
 
@@ -235,7 +303,7 @@
     
     if (easyTableView.isDragging) self.ignoreScrolling = NO;
     
-    if ( easyTableView == self.verticalView ){
+    if ( easyTableView == self.verticalView /*&& self.isVerticalFocused*/ ){
         
         CGFloat index = contentOffset.y;
         if ( index < 0 )index = 0;
@@ -251,12 +319,13 @@
             p.x = equivalentOffset;
             self.targetOffset = p;
             if ( easyTableView.isDragging ){
-                [self.horizontalView setContentOffset:CGPointMake(equivalentOffset, 0.0f) animated:YES];
+                //[self.horizontalView.tableView setContentOffset:CGPointMake(0.0f, equivalentOffset) animated:YES];
+                [self.horizontalView setContentOffset:CGPointMake(equivalentOffset,0.0f) animated:YES];
             } else if (!self.ignoreScrolling) {
                 [self.horizontalView setContentOffset:CGPointMake(equivalentOffset, 0.0f) animated:NO];
             }
         }
-    } else {
+    } else /*if (self.isHorizontalFocused) */{
     
         CGFloat index = contentOffset.x;
         if ( index < 0 ) index = 0;
