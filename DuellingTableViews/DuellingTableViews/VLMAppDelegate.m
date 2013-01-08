@@ -19,6 +19,10 @@
     // Override point for customization after application launch.
     
     self.window.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"background_light.png"]];
+    UIView *colorfield = [[UIView alloc] initWithFrame:self.window.frame];
+    [colorfield setUserInteractionEnabled:NO];
+    [colorfield setBackgroundColor:[UIColor colorWithHue:26.0f/360.0f saturation:0.8f brightness:0.95f alpha:0.075f]];
+    [self.window addSubview:colorfield];
     
     self.viewController = [[VLMViewController alloc] initWithNibName:@"VLMViewController" bundle:nil];
     self.window.rootViewController = self.viewController;

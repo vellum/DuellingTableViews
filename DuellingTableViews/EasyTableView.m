@@ -90,7 +90,7 @@
 	tableView.tag				= TABLEVIEW_TAG;
 	tableView.delegate			= self;
 	tableView.dataSource		= self;
-	//tableView.autoresizingMask	= UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	tableView.autoresizingMask	= UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	
 	// Rotate the tableView 90 degrees so that it is horizontal
 	if (orientation == EasyTableViewOrientationHorizontal)

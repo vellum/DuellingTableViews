@@ -6,8 +6,12 @@
 //  Copyright (c) 2013 David Lu. All rights reserved.
 //
 // FIXME: weird animation bug
+
+// TODO: Track isScrolling state, Detect taps versus stops on tableview
 // TODO: Tap Statusbar to scroll to top
+
 // TODO: Pan gesture recco resizes views
+
 // TODO: TouchBegin any cell tilts
 // TODO: Tap left side of cell to toggle selection, activate menu
 
@@ -16,7 +20,8 @@
 #import "VLMViewController.h"
 #import "VLMTouchBeganRecognizer.h"
 
-#define HEADER_HEIGHT 50
+//#define HEADER_HEIGHT 50
+#define HEADER_HEIGHT 20
 #define HOZ_TV_HEIGHT 150
 #define HOZ_TVC_WIDTH 150
 #define VER_TVC_HEIGHT 75
@@ -64,18 +69,20 @@
     [self setupVerticalView];
     [self setupGR];
     
-    
-    CGSize curSize = self.view.bounds.size;
-    CGRect labelRect		= CGRectMake(0, 0, curSize.width, HEADER_HEIGHT);
-    UILabel *label			= [[UILabel alloc] initWithFrame:labelRect];
-    label.textColor			= [UIColor colorWithWhite:1.0f alpha:1.0f];
-    label.backgroundColor = [UIColor clearColor];
-    label.textAlignment = UITextAlignmentCenter;
-    label.font				= [UIFont boldSystemFontOfSize:24];
-    label.text = @"All Items";
-    label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
-    label.shadowOffset = CGSizeMake(0, 1);
-    [self.view addSubview:label];
+    if ( HEADER_HEIGHT >= 50 ){
+        CGSize curSize = self.view.bounds.size;
+        CGRect labelRect		= CGRectMake(0, 0, curSize.width, HEADER_HEIGHT);
+        UILabel *label			= [[UILabel alloc] initWithFrame:labelRect];
+        label.textColor			= [UIColor colorWithWhite:1.0f alpha:1.0f];
+        label.backgroundColor = [UIColor clearColor];
+        label.textAlignment = UITextAlignmentCenter;
+        label.font				= [UIFont boldSystemFontOfSize:24];
+        label.text = @"All Items";
+        label.shadowColor = [UIColor colorWithWhite:0.0f alpha:0.2f];
+        label.shadowOffset = CGSizeMake(0, 1);
+        [self.view addSubview:label];
+        
+    }
 
 }
 
@@ -92,13 +99,13 @@
     VLMTouchBeganRecognizer *gr = (VLMTouchBeganRecognizer *)sender;
     if (gr.state == UIGestureRecognizerStateBegan){
         if (CGRectContainsPoint(self.horizontalView.frame, gr.firsttouch)){
-            NSLog(@"hoz");
             if (!self.isHorizontalFocused){
                 self.isHorizontalFocused = YES;
                 self.isVerticalFocused = NO;
                 
                 [self.verticalView setContentOffset:[self.verticalView contentOffset] animated:NO];
                 [self.horizontalView setContentOffset:[self.horizontalView contentOffset] animated:NO];
+                NSLog(@"hoz");
             } else {
                 [gr setState:UIGestureRecognizerStateFailed];
             }
@@ -210,13 +217,13 @@
         
         CGRect labelRect		= CGRectMake(b, b, 17, 21);
         UILabel *label			= [[UILabel alloc] initWithFrame:labelRect];
-        label.textColor			= [UIColor colorWithWhite:1.0f alpha:1.0f];
-        label.backgroundColor = [UIColor clearColor];
+        label.textColor			= [UIColor colorWithWhite:0.25f alpha:0.25f];
         label.textAlignment = UITextAlignmentCenter;
+        label.backgroundColor = [UIColor clearColor];
         label.font				= [UIFont boldSystemFontOfSize:14];
         label.tag = LABEL_TAG;
-        //label.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.25f];
-        //label.shadowOffset = CGSizeMake(0, 1);
+        label.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
+        label.shadowOffset = CGSizeMake(0, 1);
 
         [retview addSubview:label];
         return retview;
@@ -245,7 +252,7 @@
         label.backgroundColor = [UIColor clearColor];
         label.font				= [UIFont boldSystemFontOfSize:14];
         label.tag = LABEL_TAG;
-        label.shadowColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
+        label.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
         label.shadowOffset = CGSizeMake(0, 1);
         [retview addSubview:label];
 
@@ -268,7 +275,7 @@
         label3.font				= [UIFont systemFontOfSize:13];//[UIFont fontWithName:@"Courier" size:13];
         label3.numberOfLines = 2;
         label3.text = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas aliquam vulputate rutrum. Cras ut tincidunt lacus. Vestibulum sit amet tristique mi.";
-        label3.shadowColor = [UIColor colorWithWhite:1.0f alpha:1.0f];
+        label3.shadowColor = [UIColor colorWithWhite:1.0f alpha:0.5f];
         label3.shadowOffset = CGSizeMake(0, 1);
 
         [retview addSubview:label3];
